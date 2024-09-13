@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Passport Simulation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="passport-container">
+        <div class="passport-content">
+            <div class="line issue-place" id="issue-place">ГУ МВД России по гор. Москва</div>
+            <div class="line issue-date" id="issue-date">01.02.2003</div>
+            <div class="line issue-code" id="issue-code">456-789</div>
+
+            <div class="line surname" id="surname">Абвгдедова</div>
+            <div class="line name" id="name">Евгения</div>
+            <div class="line patronymic" id="patronymic">Андреевна</div>
+            <div class="line gender" id="gender">жен.</div>
+            <div class="line dob" id="dob">01.02.1959</div>
+            <div class="line birth-place" id="birth-place">г. Москва</div>
+        </div>
+    </div>
+
+    <div class="buttons-container">
+        <button id="toggle-surname">Изменить фамилию</button>
+        <button id="toggle-all">Изменить все</button>
+        <button id="toggle-pythagoras">Таблица Пифагора</button>
+    </div>
+
+    <div id="pythagoras-table-container" class="pythagoras-table-container"></div>
+
+    <script src="function.js"></script>
+</body>
+</html>
