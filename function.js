@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const toggleAllButton = document.getElementById("toggle-all");
     const togglePythagorasButton = document.getElementById("toggle-pythagoras");
     const pythagorasTableContainer = document.getElementById("pythagoras-table-container");
+    const tableSizeInput = document.getElementById("table-size");
 
     let isSurnameCyrillic = true;
     let isAllCyrillic = true;
@@ -22,9 +23,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Функция для смены всех данных
     function toggleAll() {
-        const issuePlaceElement = document.getElementById("issue-place");
-        const issueDateElement = document.getElementById("issue-date");
-        const issueCodeElement = document.getElementById("issue-code");
         const surnameElement = document.getElementById("surname");
         const nameElement = document.getElementById("name");
         const patronymicElement = document.getElementById("patronymic");
@@ -32,13 +30,12 @@ document.addEventListener("DOMContentLoaded", function() {
         const birthPlaceElement = document.getElementById("birth-place");
         const genderElement = document.getElementById("gender");
 
-
+        const issuePlaceElement = document.getElementById("issue-place");
+        const issueDateElement = document.getElementById("issue-date");
+        const issueCodeElement = document.getElementById("issue-code");
 
         if (isAllCyrillic) {
             // Переводим на английский
-            issuePlaceElement.innerText = 'MIA of Russia in Moscow';
-            issueDateElement.innerText = '01.02.2003';
-            issueCodeElement.innerText = '456-789';
             surnameElement.innerText = 'Abvgdedova';
             nameElement.innerText = 'Evgenia';
             patronymicElement.innerText = 'Andreevna';
@@ -46,11 +43,11 @@ document.addEventListener("DOMContentLoaded", function() {
             birthPlaceElement.innerText = 'Moscow';
             genderElement.innerText = 'female';
 
-        } else {
-            // Возвращаем на русский
-            issuePlaceElement.innerText = 'ГУ МВД России по гор. Москва';
+            issuePlaceElement.innerText = 'MIA of Russia in Moscow';
             issueDateElement.innerText = '01.02.2003';
             issueCodeElement.innerText = '456-789';
+        } else {
+            // Возвращаем на русский
             surnameElement.innerText = 'Абвгдедова';
             nameElement.innerText = 'Евгения';
             patronymicElement.innerText = 'Андреевна';
@@ -58,6 +55,9 @@ document.addEventListener("DOMContentLoaded", function() {
             birthPlaceElement.innerText = 'г. Москва';
             genderElement.innerText = 'жен.';
 
+            issuePlaceElement.innerText = 'ГУ МВД России по гор. Москва';
+            issueDateElement.innerText = '01.02.2003';
+            issueCodeElement.innerText = '456-789';
         }
         isAllCyrillic = !isAllCyrillic;
     }
@@ -88,25 +88,48 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             table.appendChild(row);
         }
-
         return table;
     }
 
     // Функция для показа/скрытия таблицы Пифагора
     function togglePythagorasTable() {
         if (isPythagorasVisible) {
-            pythagorasTableContainer.innerHTML = '';
             pythagorasTableContainer.style.display = 'none';
         } else {
-            const table = generatePythagorasTable(10);
+            const tableSize = parseInt(tableSizeInput.value);
+
+            if (isNaN(tableSize) || tableSize <= 0) {
+                alert('Введите корректное значение для размера таблицы');
+                return;
+            }
+
+            pythagorasTableContainer.innerHTML = ''; // Очищаем контейнер
+            const table = generatePythagorasTable(tableSize);
             pythagorasTableContainer.appendChild(table);
             pythagorasTableContainer.style.display = 'block';
         }
+
         isPythagorasVisible = !isPythagorasVisible;
     }
 
-    // Подключаем обработчики событий к кнопкам
+    // Функция для моментального изменения таблицы при вводе значения
+    function updatePythagorasTableOnInput() {
+        const tableSize = parseInt(tableSizeInput.value);
+
+        if (isNaN(tableSize) || tableSize <= 0) {
+            pythagorasTableContainer.innerHTML = ''; // Очищаем контейнер, если ввод некорректный
+            return;
+        }
+
+        pythagorasTableContainer.innerHTML = ''; // Очищаем контейнер
+        const table = generatePythagorasTable(tableSize);
+        pythagorasTableContainer.appendChild(table);
+        pythagorasTableContainer.style.display = 'block';
+    }
+
+    // Подключаем обработчики событий к кнопкам и полю ввода
     toggleSurnameButton.addEventListener("click", toggleSurname);
     toggleAllButton.addEventListener("click", toggleAll);
     togglePythagorasButton.addEventListener("click", togglePythagorasTable);
+    tableSizeInput.addEventListener("input", updatePythagorasTableOnInput);
 });

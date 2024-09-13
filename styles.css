@@ -96,7 +96,13 @@ button:hover {
     background-color: #ccc;
 }
 
-/* Стили для таблицы Пифагора */
+.pythagoras-input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
 .pythagoras-table-container {
     display: none;
     text-align: center;
